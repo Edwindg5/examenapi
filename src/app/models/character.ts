@@ -1,10 +1,16 @@
+export interface ICharacter {
+  id: number;
+  name: string;
+  image: string;
+  race: string;
+  gender: string;
+  ki: string;
+  maxKi: string;
+  affiliation: string;
+  description: string;
+  transformations: ITransformation[];
+}
 
-export interface Character {
-    id: number;
-    name: string;
-    species: string;
-    gender: string;
-    imageUrl: string;
-   
-  }
-  
+export interface ITransformation {
+  name: string;
+}

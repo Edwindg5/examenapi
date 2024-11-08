@@ -1,0 +1,20 @@
+<div class="characters-list">
+    <div *ngFor="let character of characters" class="character-item">
+      <h2>{{ character.name }}</h2>
+      <img [src]="character.image" alt="{{ character.name }}" class="character-image">
+      <p><strong>Raza:</strong> {{ character.race }}</p>
+      <p><strong>Género:</strong> {{ character.gender }}</p>
+      <p><strong>Ki base:</strong> {{ parseKi(character.ki) }}</p>
+      <p><strong>Ki total:</strong> {{ parseKi(character.maxKi) }}</p>
+      <p><strong>Afiliación:</strong> {{ character.affiliation }}</p>
+  
+      <div *ngIf="character.transformations && character.transformations.length > 0">
+        <h4>Transformaciones:</h4>
+        <ul>
+          <li *ngFor="let transformation of character.transformations">{{ transformation.name }}</li>
+        </ul>
+      </div>
+      <button (click)="onClick(character.id)">Seleccionar personaje</button>
+    </div>
+  </div>
+  
