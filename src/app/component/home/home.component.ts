@@ -10,9 +10,9 @@ import { CharacterComponent } from '../character/character.component';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
-  
-  onCharacterClicked(characterId: number): void {
-    console.log("Character ID seleccionado:", characterId);
-    // Aquí puedes agregar lógica adicional según necesites
+  handleCharacterSelection(characterId: number): void {
+    console.log("Selected Character ID:", characterId);
+    // Aquí puedes agregar más lógica según necesites
   }
 }
+

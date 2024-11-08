@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { ICharacter } from '../../models/character';
-import { CharacterService } from '../../services/character.service';
 import { CommonModule } from '@angular/common';
+import { CharacterService } from '../../services/character.service';
+import { ICharacter } from '../../models/character';
 
 @Component({
   selector: 'app-character',
@@ -11,35 +11,35 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./character.component.css']
 })
 export class CharacterComponent implements OnInit {
-  characters: ICharacter[] = [];
-  meta: any;
-  links: any;
+  data: ICharacter[] = [];  
+  pageDetails: any;        
+  navigationLinks: any;   
   currentPage: number = 1;
-  limit: number = 10;
+  itemsPerPage: number = 10;
 
-  @Input() character!: ICharacter;
-  @Output() characterClicked = new EventEmitter<number>();
+  @Input() charDetail!: ICharacter;
+  @Output() selectedCharacter = new EventEmitter<number>();
 
-  constructor(private characterService: CharacterService) {}
+  constructor(private service: CharacterService) {}
 
   ngOnInit(): void {
-    this.loadCharacters();
+    this.fetchCharacters();
   }
 
-  loadCharacters(page: number = 1): void {
-    this.characterService.getCharacters(page, this.limit).subscribe((response) => {
-      this.characters = response.items;
-      this.meta = response.meta;
-      this.links = response.links;
+  fetchCharacters(page: number = 1): void {
+    this.service.retrieveCharacters(page, this.itemsPerPage).subscribe((response) => {
+      this.data = response.items;
+      this.pageDetails = response.meta;
+      this.navigationLinks = response.links;
       this.currentPage = page;
     });
   }
-  
-  parseKi(ki: string): string {
-    return ki ? ki.replace(/\./g, ',') : 'No disponible';
+
+  formatKi(value: string): string {
+    return value ? value.replace(/\./g, ',') : 'Not available';
   }
 
-  onClick(characterId: number): void {
-    this.characterClicked.emit(characterId);
+  triggerSelection(id: number): void {
+    this.selectedCharacter.emit(id);
   }
 }

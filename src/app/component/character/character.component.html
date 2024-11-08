@@ -1,20 +1,22 @@
-<div class="characters-list">
-    <div *ngFor="let character of characters" class="character-item">
-      <h2>{{ character.name }}</h2>
-      <img [src]="character.image" alt="{{ character.name }}" class="character-image">
-      <p><strong>Raza:</strong> {{ character.race }}</p>
-      <p><strong>Género:</strong> {{ character.gender }}</p>
-      <p><strong>Ki base:</strong> {{ parseKi(character.ki) }}</p>
-      <p><strong>Ki total:</strong> {{ parseKi(character.maxKi) }}</p>
-      <p><strong>Afiliación:</strong> {{ character.affiliation }}</p>
+<div class="character-list">
+    <div *ngFor="let char of data" class="character-card" (click)="triggerSelection(char.id)">
+      <h2>{{ char.name }}</h2>
+      <img [src]="char.image" alt="{{ char.name }}" class="character-image">
   
-      <div *ngIf="character.transformations && character.transformations.length > 0">
-        <h4>Transformaciones:</h4>
+      <p><strong>Race:</strong> {{ char.race }}</p>
+      <p><strong>Gender:</strong> {{ char.gender }}</p>
+      <p><strong>Base Ki:</strong> {{ formatKi(char.ki) }}</p>
+      <p><strong>Total Ki:</strong> {{ formatKi(char.maxKi) }}</p>
+      <p><strong>Affiliation:</strong> {{ char.affiliation }}</p>
+  
+      <div *ngIf="char.transformations && char.transformations.length > 0">
+        <h4>Transformations:</h4>
         <ul>
-          <li *ngFor="let transformation of character.transformations">{{ transformation.name }}</li>
+          <li *ngFor="let transformation of char.transformations">
+            {{ transformation.name }}
+          </li>
         </ul>
       </div>
-      <button (click)="onClick(character.id)">Seleccionar personaje</button>
     </div>
   </div>
   
