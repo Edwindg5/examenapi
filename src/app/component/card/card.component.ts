@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Input } from '@angular/core';
-import { Character } from '../../models/character';
+
+
 
 @Component({
   selector: 'app-card',

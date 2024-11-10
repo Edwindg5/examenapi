@@ -1,22 +1,19 @@
-<div class="character-list">
-    <div *ngFor="let char of data" class="character-card" (click)="triggerSelection(char.id)">
-      <h2>{{ char.name }}</h2>
-      <img [src]="char.image" alt="{{ char.name }}" class="character-image">
-  
-      <p><strong>Race:</strong> {{ char.race }}</p>
-      <p><strong>Gender:</strong> {{ char.gender }}</p>
-      <p><strong>Base Ki:</strong> {{ formatKi(char.ki) }}</p>
-      <p><strong>Total Ki:</strong> {{ formatKi(char.maxKi) }}</p>
-      <p><strong>Affiliation:</strong> {{ char.affiliation }}</p>
-  
-      <div *ngIf="char.transformations && char.transformations.length > 0">
-        <h4>Transformations:</h4>
-        <ul>
-          <li *ngFor="let transformation of char.transformations">
-            {{ transformation.name }}
-          </li>
-        </ul>
-      </div>
+<div *ngFor="let character of data">
+  <img [src]="character.image" alt="{{ character.name }}">
+  <h3>{{ character.name }}</h3>
+  <button (click)="showCharacterDetails(character)">Show Details</button>
+
+  <!-- Detalles del personaje para SweetAlert (ocultos en la vista) -->
+  <div id="character-details-{{ character.id }}" style="display: none;">
+    <p><strong>Race:</strong> {{ character.race }}</p>
+    <p><strong>Gender:</strong> {{ character.gender }}</p>
+    <p><strong>Base Ki:</strong> {{ formatKi(character.ki) }}</p>
+    <p><strong>Total Ki:</strong> {{ formatKi(character.maxKi) }}</p>
+    <p><strong>Affiliation:</strong> {{ character.affiliation }}</p>
+    <h4 *ngIf="character.transformations?.length">Transformations:</h4>
+    <div *ngIf="character.transformations; else noTransformations">
+      <p *ngFor="let trans of character.transformations">{{ trans.name }}</p>
     </div>
+    <ng-template #noTransformations><p>No transformations available.</p></ng-template>
   </div>
-  
+</div>

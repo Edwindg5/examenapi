@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CharacterService } from '../../services/character.service';
 import { ICharacter } from '../../models/character';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-character',
@@ -11,9 +12,7 @@ import { ICharacter } from '../../models/character';
   styleUrls: ['./character.component.css']
 })
 export class CharacterComponent implements OnInit {
-  data: ICharacter[] = [];  
-  pageDetails: any;        
-  navigationLinks: any;   
+  data: ICharacter[] = [];
   currentPage: number = 1;
   itemsPerPage: number = 10;
 
@@ -29,17 +28,21 @@ export class CharacterComponent implements OnInit {
   fetchCharacters(page: number = 1): void {
     this.service.retrieveCharacters(page, this.itemsPerPage).subscribe((response) => {
       this.data = response.items;
-      this.pageDetails = response.meta;
-      this.navigationLinks = response.links;
-      this.currentPage = page;
     });
   }
 
-  formatKi(value: string): string {
+  formatKi(value: string | undefined): string {
     return value ? value.replace(/\./g, ',') : 'Not available';
   }
 
-  triggerSelection(id: number): void {
-    this.selectedCharacter.emit(id);
+  showCharacterDetails(char: ICharacter): void {
+    this.selectedCharacter.emit(char.id);
+
+    // Llama a SweetAlert con los detalles del personaje
+    Swal.fire({
+      title: char.name,
+      html: document.getElementById(`character-details-${char.id}`)?.innerHTML || '',
+      confirmButtonText: 'Close'
+    });
   }
 }
